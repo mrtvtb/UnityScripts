@@ -1,0 +1,39 @@
+using UnityEngine;
+using UnityEngine.SceneManagement;
+
+public class Player : MonoBehaviour
+{
+    // Механіка збору монет
+    private int coins;
+    public AudioSource audiosource;
+    public AudioClip collect_coin;
+
+    public void CollectCoins()
+    {
+        coins++;
+
+        audiosource.PlayOneShot(collect_coin);
+
+        print("Collected Coins:" + coins);
+    }
+
+    // Механіка здоров'я
+    private int health = 10;
+
+    public AudioClip damageSound;
+    public void TakeDamage(int damage)
+    {
+        health -= damage;
+        if (health > 0)
+        {
+            audiosource.PlayOneShot(damageSound);
+            print("Player health: " + health);
+
+        }
+        else
+        {
+            int sceneIndex = SceneManager.GetActiveScene().buildIndex;
+            SceneManager.LoadScene(sceneIndex);
+        }
+    }
+}
